@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Logs
+agent_logs/
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data
+# Keep data folder structure but ignore the data files if needed
+# data/
