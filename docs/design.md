@@ -5,9 +5,23 @@ Matthew Bridge,
 Introducing! 
 
 ## System Components
-### Recognize
+### Scripts
+#### Recognize
 Recognize...
-### Enroll.py
+#### Enroll.py
 Enroll...
-### Attendance.py
+#### Attendance.py
 Attend...
+### Data
+#### faces/
+Faces...
+#### Attendance_Log.csv
+Attendance...
+
+## Gemini Agent Interaction
+
+
+#### Task Allocation Table
+| Task | Executor |
+| ----------- | ----------- |
+| System Design | Human |
