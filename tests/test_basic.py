@@ -1,5 +1,6 @@
 import sys
 import os
+import pytest
 
 try:
     import cv2
@@ -12,6 +13,7 @@ except ImportError:
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.recognize import load_enrolled_faces, recognize_faces_in_image
+from src.enroll import enroll_face
 import face_recognition
 
 def main():
@@ -160,6 +162,30 @@ def main():
                 print(f"   -> Saved clearest snapshot to {filename}")
             
     return tracked_unknowns
+
+def test_enroll_face():
+    # 1. Create mock cropped image
+    mock_image = np.zeros((100, 100, 3), dtype=np.uint8)
+    
+    # 2. Fake name
+    fake_name = "test_mock_user_123"
+    
+    # 3. Call enroll_face
+    saved_path = enroll_face(mock_image, fake_name, extension=".png")
+    
+    try:
+        # 4. Check if file exists
+        assert os.path.exists(saved_path), "File was not created."
+        
+        # 5. Load and match
+        loaded_image = cv2.imread(saved_path)
+        assert loaded_image is not None, "Failed to load the saved image."
+        assert loaded_image.shape == mock_image.shape, "Loaded image shape does not match."
+        assert np.array_equal(mock_image, loaded_image), "Loaded image pixels do not match the mock image."
+    finally:
+        # Cleanup
+        if os.path.exists(saved_path):
+            os.remove(saved_path)
 
 if __name__ == '__main__':
     extracted_guests = main()
