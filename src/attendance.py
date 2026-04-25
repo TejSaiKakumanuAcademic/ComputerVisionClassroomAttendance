@@ -8,7 +8,7 @@ except ImportError:
 def log_attendance(results, log_file="../data/attendance_log.csv"):
     """
     Appends an array of face recognition results to the attendance log.
-    An entry format: face_encoding, face_name, timestamp
+    An entry format: Date, Time, Name
     """
     # Adjust path if running from the root directory instead of src/
     if not os.path.exists(os.path.dirname(log_file)):
@@ -27,17 +27,17 @@ def log_attendance(results, log_file="../data/attendance_log.csv"):
     with open(log_file, mode='a', newline='') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(['face_encoding', 'face_name', 'timestamp'])
+            writer.writerow(['Date', 'Time', 'Name'])
 
         for res in results:
             name = res.get('name', 'Unknown')
-            encoding = res.get('encoding')
-            
-            # Convert numpy array to list and then string to store in a single CSV column
-            if encoding is not None:
-                encoding_str = str(encoding.tolist())
-            else:
-                encoding_str = ''
-                
             timestamp = get_current_date()
-            writer.writerow([encoding_str, name, timestamp])
+            
+            # get_current_date() returns "%Y-%m-%d %H:%M:%S", split by space
+            parts = timestamp.split(' ')
+            if len(parts) == 2:
+                date_str, time_str = parts
+            else:
+                date_str, time_str = timestamp, ""
+                
+            writer.writerow([date_str, time_str, name])

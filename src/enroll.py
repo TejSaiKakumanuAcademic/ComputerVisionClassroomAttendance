@@ -18,7 +18,7 @@ def enroll_face(image, name, extension=".png"):
         
     # Define the output directory relative to the project root
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    output_dir = os.path.join(project_root, "data", "registered_faces")
+    output_dir = os.path.join(project_root, "data", "faces")
     
     # Create the directory if it doesn't exist
     if not os.path.exists(output_dir):
