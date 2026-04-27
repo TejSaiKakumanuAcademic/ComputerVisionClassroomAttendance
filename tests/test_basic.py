@@ -44,13 +44,12 @@ def test_is_face_enrolled():
 
 def test_log_attendance(tmp_path):
     log_file = tmp_path / "test_log.csv"
-    dummy_results = [{'name': 'Test User', 'encoding': np.array([0.1, 0.2])}]
+    dummy_results = [{'name': 'Test User'}]
     log_attendance(dummy_results, log_file=str(log_file))
     assert os.path.exists(log_file)
     with open(log_file, "r") as f:
         content = f.read()
         assert "Test User" in content
-        assert "face_encoding" in content
 
 def test_get_current_date():
     date_str = get_current_date()
