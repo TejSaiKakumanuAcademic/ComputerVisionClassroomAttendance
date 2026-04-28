@@ -18,14 +18,24 @@ Tasks requiring holistic system awareness, environment management, and anticipat
 - **Environment Setup:** Python environment errors (like missing OpenCV or `face_recognition` packages) were encountered during execution, which the AI code generation process could not natively resolve without developer environment management.
 
 ### 3. How did you refine your prompts over time?
-Prompts evolved from broad, goal-oriented requests into highly specific, constraint-driven instructions based on observed failures:
-- **Adding Strict Constraints:** As the project grew, prompts started including defensive rules like: *"make sure you don't delete the unit test... nor mess with enroll, or attendence files at any point... make sure you don't create any new files."*
-- **Describing Exact Formats:** Instead of saying "fix the csv," the prompt became specific: *"read the attendance csv to understand the format: date,time,Name"*.
-- **Detailing the Logic Flow:** For complex edge cases, the prompts broke down the exact state machine required. For example, detailing the 3-step logic for handling duplicate names (alert user, ask to save/overwrite, implement specific naming convention while abstracting it from the logs).
+Prompts were at first very conversational and human-like, asking Gemini CLI to perform tasks as one would a coworker. As more prompts were generated, they took on a more managerial tone—treating Gemini CLI as a junior developer for whom we outlined code, which it then executed.
+Techniques Used:
+- **Management Prompts**
+Instead of being conversational with Gemini, we provided strict instructions for generation, outlining expectations for how the scripts should interact. This gave Gemini prompts more structure. 
+Example: *"This script should use a passed in array of results from recognize.py to append to the attendance_log.csv with an entry. An entry should be in this format: face_encoding, face_name, timestamp."*
+
+- **Negative Prompts** 
+As the project grew, Gemini required more guidance on what not to do; we utilized **Negative Prompts** to refine Gemini's scope.
+Example: *"make sure you don't delete the unit test... nor mess with enroll, or attendence files at any point... make sure you don't create any new files."*
+
+- **Referencing Project Files:** 
+Once the project contained existing files, Gemini could read them directly instead of requiring descriptions of finished scripts.
+Example: *"read the attendance csv to understand the format: date,time,Name"*.
 
 ### 4. Did using an AI Agent change how you approached software development?
-Yes, the approach fundamentally shifted from **writing code** to **system architecture and QA testing**. 
-Instead of spending time figuring out the syntax for OpenCV bounding boxes or CSV writing, the developer acted as a director and tester. The workflow became: define requirements -> AI generates code -> developer rigorously tests edge cases -> developer observes outputs (e.g., checking if the image was actually saved, or if the CSV had arrays instead of strings) -> developer writes a highly specific corrective prompt. The developer's primary job became maintaining the "big picture" state and closing logical loopholes that the AI didn't anticipate.
+Yes. In earlier classes, the focus was on syntax and how to write code. When working with Gemini CLI, it is more effective to act as an architect, leaving the syntax to Gemini while the developer handles the program's design.
+
+Normally, to use a library, a developer must read documentation to find relevant function calls. Gemini can parse documentation and identify the most relevant functions quickly. This allows the developer more time to plan the program. In this project, we used OpenCV; rather than spending hours learning the library, Gemini was able to write the implementation almost instantly.
 
 ### 5. What risks do you see in over-reliance on AI Agents?
 - **Silent Logic Failures and Data Loss:** As seen with the file-overwrite issue, AI will often implement the "happy path" without defensive programming. If developers don't thoroughly test edge cases, critical data could be lost or corrupted in production.
