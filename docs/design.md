@@ -1,5 +1,5 @@
 # 412 Project: Facial Attendance System
-Matthew Bridge, Matthew Shane, Tej Kakumanu
+Matthew Bridge, Matthew Shane, Tej Sai Kakumanu
 
 ## Introduction
 In a classroom setting attendance can be chaotic especially in large universities when enrollment is over 100 students. Our system seeks to streamline the process through an automated facial recognition system. The system utilizes a Python-based architecture to automate student check-ins through real-time image processing.
@@ -9,7 +9,17 @@ Student's faces will be scanned upon entering the class room. If the student is 
 ## System Components
 ### Scripts
 #### Recognize.py
-Responsible for parsing incoming visual data from the environment to identify individuals. It compares captured facial scans against the known database. Upon a match, it triggers a request to the attendance script to log the entry. If no matches are found it triggers a request to the enroll script for onboarding.
+
+This script will be responsible for coordinating with the incoming visual data from the environment to identify individuals using other functions in this script. It contains a **main()** function to compare captured facial scans against the known database. Upon a match, it will trigger a request to the attendance.py script to log the entry. If no matches are found it will trigger a request to the enroll.py script for onboarding and then log attendance for the new face.
+
+It will have other helper funcitons like:
+
+**load_enrolled_faces():** To load enrolled faces from the faces/ directory.
+
+**recognise_faces_in_image():** To help convert the frames from the video stream into encodings for comparison against the loaded faces. It will also incorporate the logic for recognising the faces under a certain tolerance level.
+
+**is_face_enrolled():** To help determine if the face is enrolled. It will act as a helper for the main function to redirect particular faces into the attendance.py or enroll.py.
+
 #### Enroll.py
 Handles the registration of new student faces. The script will parse the facial data and register it in the database. Then will request the attendance script to log the new face.
 #### Attendance.py
