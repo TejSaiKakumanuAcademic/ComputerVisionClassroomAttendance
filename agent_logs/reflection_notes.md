@@ -1,7 +1,5 @@
 # Reflection Notes on Agent Code Generation
 
-Based on the analysis of `code_generation.md`, here are the answers to the reflection questions:
-
 ### 1. Which tasks were most suitable for Gemini CLI?
 The AI agent excelled at tasks that involved discrete logic implementation, localized refactoring, and writing boilerplate code given clear input/output requirements. Specifically:
 - **Writing isolated functions and algorithms:** Implementing the core math for distance calculations (`is_face_enrolled`), or setting up standard OpenCV camera streams.
@@ -38,7 +36,6 @@ Yes. In earlier classes, the focus was on syntax and how to write code. When wor
 Normally, to use a library, a developer must read documentation to find relevant function calls. Gemini can parse documentation and identify the most relevant functions quickly. This allows the developer more time to plan the program. In this project, we used OpenCV; rather than spending hours learning the library, Gemini was able to write the implementation almost instantly.
 
 ### 5. What risks do you see in over-reliance on AI Agents?
-- **Silent Logic Failures and Data Loss:** As seen with the file-overwrite issue, AI will often implement the "happy path" without defensive programming. If developers don't thoroughly test edge cases, critical data could be lost or corrupted in production.
-- **Integration Blind Spots:** The AI is context-bound to the prompt. It might create two perfectly functioning modules (Enrollment and Attendance) but fail to link them logically (enrolling doesn't mark attendance) unless explicitly told to do so.
-- **Technical Debt via Formatting:** AI can generate "working" code that produces terrible artifacts. For instance, dumping massive numerical encoding arrays into the attendance CSV worked programmatically but was unreadable. Over-reliance without manual inspection can lead to heavily degraded data schemas.
-- **Architectural Drift:** Without strict rules (like the ones added later in the prompts), AI may start creating redundant folders, hallucinating paths, or duplicating logic, which slowly degrades the project's structural integrity.
+
+Throughout our project, we realised that AI is still not perfect with a lot of things. If we don't pay attention to what is being implemented by AI, it is highly likely that AI would cause some disastrous mistakes like file overwriting which could lead to loss of critical data in production phase. We also observed that AI is really not very robust regarding analysing the whole project's context before implementing a new file. For example, when we asked the AI to implement the enroll function, it just focused on implementing the enroll function rather than understand the project structure and creating a logic to also mark the student in attendance. This indicates that majority of the agent's context window is filled with the details included in the prompt. Which means it is crucial for developers to append strict rules into their prompts that guide the agent appropriately.
+
