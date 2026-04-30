@@ -21,7 +21,9 @@ It will have other helper funcitons like:
 **is_face_enrolled():** To help determine if the face is enrolled. It will act as a helper for the main function to redirect particular faces into the attendance.py or enroll.py.
 
 #### Enroll.py
-Handles the registration of new student faces. The script will parse the facial data and register it in the database. Then will request the attendance script to log the new face.
+
+Handles the registration of unknown students into the system's memory. Specifically, this script will implement a function `enroll_face()` which takes in an image of a face and a name, storing the face into a directory to be checked against in the future.
+
 #### Attendance.py
 Acts as a way to format attendance data for the attendance log csv. The scanned face will be logged alongside data and time.
 #### Utils.py
