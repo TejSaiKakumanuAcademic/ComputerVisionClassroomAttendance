@@ -1,19 +1,28 @@
 # Reflection Notes on Agent Code Generation
 
 ### 1. Which tasks were most suitable for Gemini CLI?
-The AI agent excelled at tasks that involved discrete logic implementation, localized refactoring, and writing boilerplate code given clear input/output requirements. Specifically:
-- **Writing isolated functions and algorithms:** Implementing the core math for distance calculations (`is_face_enrolled`), or setting up standard OpenCV camera streams.
-- **Generating Unit Tests:** Creating mock data and assertions for functions like `test_enroll_face` based on clear guidelines.
-- **Formatting and Data Transformation:** Parsing date/time strings to fix the CSV schema, or stripping arrays from logs.
-- **Regex and File Handling:** Creating logic to handle file naming increments (`name_1`, `name_2`) and extracting base names for the attendance system.
-- **Direct Refactoring:** Moving the execution loop from `test_basic.py` into a `main()` function in `recognize.py` when explicitly instructed.
+
+The AI was most useful in writing code snippets that had a clearly defined input, output and goal, as well as in performing refactoring work and handling the implementation of discrete logic. For instance:
+
+- **Implementing specific functions:** The AI successfully implemented the `enroll_face()` function in the `enroll.py` script with little human interaction besides the initial prompt.
+
+- **Generating unit tests:** A single prompt was utilized to instruct the agent to implement unit tests for the `load_enrolled_faces()`, `recognize_faces_in_image()`, `is_face_enrolled()`, and `log_attendance()` functions, which it did easily.
+
+- **Handling specific logic:** The agent handled creating logic to handle incremental file naming, as well as the regex to extract people's names from their file names.
+
+- **Refactoring:** The agent was able to move the main code from the `test_basic.py` file into the `recognize.py` function when instructed to better match the desired project design.
 
 ### 2. Which tasks were least suitable?
-Tasks requiring holistic system awareness, environment management, and anticipating real-world edge cases were less successful. Specifically:
-- **System Integration & Logical Gaps:** The AI failed to realize that newly enrolled users should immediately be logged as present for the day. This required manual intervention and a follow-up prompt.
-- **Handling Destructive Edge Cases:** When enrolling a duplicate name, the AI's initial implementation silently overwrote the existing image file, destroying data. It required the user to notice this during testing and explicitly demand a prompt-and-save-as-new workflow.
-- **Project Structure Consistency:** The AI initially hallucinated a relative path `../data/registered_faces` and later created redundant directories because it didn't intrinsically understand the developer's desired global folder structure.
-- **Environment Setup:** Python environment errors (like missing OpenCV or `face_recognition` packages) were encountered during execution, which the AI code generation process could not natively resolve without developer environment management.
+
+The AI agent was less effective in tasks that required knowledge of the system as a whole, as well as situations that involved edge cases and managing the project environment. These tasks included:
+
+- **System-wide logic:** The AI did not automatically make the connection that when a new user is enrolled, they should be logged as in attendance.
+
+- **Handling edge cases:** Initially, the AI implemented code that would override an already existing user, which was not the desired output. Human input was necessary using further prompting to fix this issue.
+
+- **Project structuring:** The AI tried using the relative path `../data/registered_faces`, which caused data to be stored in the wrong location as it did not have a full understanding of the ideal project structure.
+
+- **Environment setup:** During development, there were issues with developers not having the required packages and the AI was unable to resolve these on its own, requiring human intervention.
 
 ### 3. How did you refine your prompts over time?
 Prompts were at first very conversational and human-like, asking Gemini CLI to perform tasks as one would a coworker. As more prompts were generated, they took on a more managerial tone—treating Gemini CLI as a junior developer for whom we outlined code, which it then executed.
