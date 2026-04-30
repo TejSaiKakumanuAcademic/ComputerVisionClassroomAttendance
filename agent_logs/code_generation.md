@@ -155,7 +155,6 @@ Prompt:
 Result:
 
 - The `enroll_face()` function was modified to stop pointing statically to the `../data/registered_faces` directory, instead building the path from the project root to the `data` directory and then the `registered_faces` subdirectory.
--
 
 Human Action:
 
@@ -166,7 +165,7 @@ Human Action:
 
 ---
 
-Task: Rearranging Files and Adding Unit Tests
+## Task: Rearranging Files and Adding Unit Tests
 Prompt: "I want to make some rearrangements to fix some design mistakes for this project. First I want you to move main running related stuff in tests/test_basic.py into a main function inside revognise.py. Then, populate testbasic with unittests for other functions which doesn't have unit tests. Also make sure you don't delete the unit test that is already in the testbasic, nor mess with enroll, or attendence files at any point. This rule hold for any prompt in this chat. If you need to make any changes to those particular files let me know first and also make sure you don't create any new files in the project directory since we must maintian the standard format"
 
 Result:
@@ -180,7 +179,7 @@ Human Action:
 
 ---
 
-Task: Interactive Enrollment in Terminal
+## Task: Interactive Enrollment in Terminal
 Prompt: "Now, the main funciton has a logic to save the unknown faces found in the attendance video detection. I want you to make sure it doesn't save it but just after the detection period is over(when pressed q in the video) the user should be prompted to input the names of the people who were unknown. They should also have the option to choose between not enrolling or enrolling. If enroll the then we should call the enroll funciton to regester the face. If known faces are found it should call attendance to mark that someone is present on a particular day."
 
 Result:
@@ -195,7 +194,7 @@ Human Action:
 
 ---
 
-Task: Modifying Enrollment Directory
+## Task: Modifying Enrollment Directory
 Prompt: "I need the regestered faces go inside faces itself instead of regestered face directory. I shouldn't edit the project format remember
 edit enroll.py"
 
@@ -210,7 +209,7 @@ Human Action:
 
 ---
 
-Task: Linking Interactive Enrollment to Attendance
+## Task: Linking Interactive Enrollment to Attendance
 Prompt: "I also want to make sure after an unknown person is enrolled, they must be marked for attendance on that day"
 
 Result:
@@ -224,7 +223,7 @@ Human Action:
 
 ---
 
-Task: Re-formatting Attendance CSV
+## Task: Re-formatting Attendance CSV
 Prompt: "we don't need the encoding in attendance read the attendance csv to understnad the format: date,time,Name"
 
 Result:
@@ -240,7 +239,7 @@ Human Action:
 
 ---
 
-Task: Multiple Frames and Overwrite Logic
+## Task: Multiple Frames and Overwrite Logic
 Prompt: "in the main function, if we give a known name that is already inside the folder/enrolled, it seems to be over writing the original image. so the following are the things that needs to be taken care of:
 
 1. We need to alert the user as soon as a same name is found. 
